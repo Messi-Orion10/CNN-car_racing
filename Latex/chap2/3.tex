@@ -1,0 +1,79 @@
+\subsection{Results}
+In this section we are going to explore the results reached by the two models. The results are evaluated in terms of driving performance of the car and in terms of accuracy, f1 score, precision and recall.
+In order to evaluate the two models we have to fit they. The fitting is made by the function \verb+model.fit()+ where \verb+model+ is a \verb+sequential+ object of the \verb+keras.model+ library. The fit function is executed by setting $50$ epochs, $128$ batch size and by putting two techniques. One of them is useful for avoiding overfitting and the other is useful since we are working with an unbalanced training set. They are:
+\begin{itemize}
+\item{\textbf{Early stopping:} it's a technique used when training machine learning models to avoid overfitting. Its basic idea is to stop training when model performance on a validation set stops improving. In practice, the model is continuously evaluated on a validation data set during training, and if its performance does not improve for a number of consecutive epochs, training is interrupted. This technique is useful to prevent the trained model from learning the training data too well, adapting to noises or peculiarities specific to that data set but losing the ability to generalize to new unseen data. Early stopping helps to find the optimal point where the model has the best performance on validation data. In our case we have implemented the early stopping with $10$ as patience and it is started after the first $15$ epochs;}
+\item{\textbf{Class weight:} it's a technique used when working with unbalanced datasets, in which some classes have significantly more or fewer examples than other classes. In this context, assigning different weights to classes during training can help the model to give greater importance to the less represented classes. When class weight is used, a different weight can be assigned to each class when filling in the model. For example, if a class has fewer examples, its weight can be increased, while for a class with more examples the weight can be reduced. This allows the model to "pay more attention" to the less represented classes during training. The use of class weight is useful when you want to ensure that the model is not dominated by the majority classes and that it is able to generalize well even on less represented classes. In our case we have chosen the weights shown in the figure \ref{fig: weights};
+\begin{figure}[h!]
+    \weights
+    \caption{Class weights}
+    \label{fig: weights}
+\end{figure}}
+\end{itemize}
+
+\subsubsection{Model A}
+For fitting the first model we need of 48.3 seconds. The results are evaluated using the cross entropy loss function and accuracy. The results are shown in figure \ref{fig:testA}.
+\begin{figure}[h!]
+    \testA
+    \caption{Test and Loss accuracy for model A}
+    \label{fig:testA}
+\end{figure}
+In particular, for the first model we have:
+\begin{verbatim}
+Test loss: 1.4987
+Test accuracy: 0.6668
+\end{verbatim}
+It can be noted that this model is affected by overfitting despite the various regularization techniques applied. This can be seen by observing the trend of the accuracy curves on the training set and test set. In particular, you can see that the accuracy curve on the training set increases without the test curve actually converging. This means that the model has learned and adapted too well to the training data, but struggles to generalize well to new unseen data. To heal our model from overfitting one might consider to apply data augmentation on training set, in order to expand the dataset and improve the model generalization. Another idea might be to reduce the learning rate to make optimization more stable and allow the model to converge better however without exaggerating otherwise the model might suffer from underfitting\footnote{Underfitting is a condition in which a machine learning model fails to adequately capture the complexity of training data, leading to unsatisfactory performance on both training and test data. In other words, the model is too simple to correctly represent the relationship between input and output variables in your problem.}. Otherwise you might think of adding more dropout layers and/or batch normalization layers in the model. The classification report is:
+\begin{verbatim}
+              precision    recall  f1-score   support
+
+         0.0       0.20      0.23      0.21       133
+         1.0       0.31      0.48      0.38       275
+         2.0       0.58      0.37      0.45       406
+         3.0       0.79      0.80      0.80      1896
+         4.0       0.31      0.10      0.15        39
+
+    accuracy                           0.67      2749
+   macro avg       0.44      0.40      0.40      2749
+weighted avg       0.68      0.67      0.67      2749
+\end{verbatim}
+Finally, in figure \ref{fig:CMA} is shown the confusion matrix of this model.
+\begin{figure}[h!]
+    \CMA
+    \caption{Confusion matrix for model A}
+    \label{fig:CMA}
+\end{figure}
+
+\subsubsection{Model B}
+For fitting the first model we need of $58.1$ seconds and the results are shown in figure \ref{fig:testB}.
+\begin{figure}[h!]
+    \testB
+    \caption{Test and Loss accuracy for model B}
+    \label{fig:testB}
+\end{figure}
+In particular, for the first model we have:
+\begin{verbatim}
+Test loss: 1.1791
+Test accuracy: 0.6151
+\end{verbatim}
+We can see that this model is affected by overfitting less than the first.
+The classification report is:
+\begin{verbatim}
+              precision    recall  f1-score   support
+
+         0.0       0.26      0.35      0.30       133
+         1.0       0.34      0.53      0.41       275
+         2.0       0.43      0.68      0.53       406
+         3.0       0.86      0.64      0.73      1896
+         4.0       0.11      0.23      0.15        39
+
+    accuracy                           0.62      2749
+   macro avg       0.40      0.48      0.42      2749
+weighted avg       0.70      0.62      0.64      2749
+\end{verbatim}
+Finally, in figure \ref{fig:CMB} is shown the confusion matrix of this model.
+\begin{figure}[h!]
+    \CMB
+    \caption{Confusion matrix for model B}
+    \label{fig:CMB}
+\end{figure}

@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, top=3cm,bottom=3cm,left = 2.9cm, right=2.9cm]{geometry}
+\usepackage[infoshow,debugshow]{tabularx}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage[bottom]{footmisc}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=red, urlcolor=violet]{hyperref}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{floatflt}
+\usepackage{caption}
+\newtheorem{theorem}{Theorem}[section]
+\theoremstyle{remark}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{proposition}{Proposition}[section]
+\theoremstyle{definition}
+\newtheorem{note}{Note}
+\theoremstyle{definition}
+
+% FIGURES can be defined here and then used or directly defined within the text
+\def\trainUno{\centering\includegraphics[width=0.7\textwidth]{img/trainUno.png}}
+\def\trainDue{\centering\includegraphics[width=1\textwidth]{img/trainDue.png}}
+\def\testUno{\centering\includegraphics[width=0.7\textwidth]{img/testUno.png}}
+\def\testDue{\centering\includegraphics[width=1\textwidth]{img/testDue.png}}
+\def\photo{\centering\includegraphics[width=0.4\textwidth]{img/photo.png}}
+\def\photoPrep{\centering\includegraphics[width=0.4\textwidth]{img/photoPrep.png}}
+\def\modA{\centering\includegraphics[width=0.4\textwidth]{img/modA.png}}
+\def\modB{\centering\includegraphics[width=0.4\textwidth]{img/modB.png}}
+\def\weights{\centering\includegraphics[width=0.6\textwidth]{img/weights.png}}
+\def\testA{\centering\includegraphics[width=0.8\textwidth]{img/testA.png}}
+\def\CMA{\centering\includegraphics[width=0.5\textwidth]{img/CMA.png}}
+\def\testB{\centering\includegraphics[width=0.8\textwidth]{img/testB.png}}
+\def\CMB{\centering\includegraphics[width=0.5\textwidth]{img/CMB.png}}
+\def\hUno{\centering\includegraphics[width=0.8\textwidth]{img/h1}}
+\def\hDue{\centering\includegraphics[width=0.5\textwidth]{img/h2}}
+
+\title{Machine Learning \\ Homework 2}
+\author{Simone Orelli\\ matricola 1749732}
+\date{January 2024}
+
+\begin{document}
+\maketitle
+\tableofcontents
+	\input{chap1/1}
+	\input{chap2/1}
+	\input{chap2/2}
+	\input{chap2/3}
+	\input{chap3/1}
+\end{document}

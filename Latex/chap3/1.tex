@@ -1,0 +1,12 @@
+\section{Results and conclusions}
+In order to solve the problem assigned to us, we built two CNN with slightly different structures, trying to highlight how the size of the kernels, their stride and the presence or not of padding can affect the results obtainable. In particular, we have achieved a result that is acceptable to both networks. However, the first model I think can drive the car slightly better (as shown in the \href{https://youtu.be/xVTm94bYn78}{video}). That is why we have chosen to examine the first model in greater depth. In particular, an investigation was conducted of how the profile of the test accuracy and test loss varies with the weight decay parameter. This survey is shown in the figure \ref{fig:h1}. In figure \ref{fig:h2} we monitored the average values of precision, recall and f1-score of the model. In particular we can notice that choosing the weight decay rate of $0.001$ is not a bad choice; it is with this value that we can get the best values of accuracy and loss on the test set. In any case, both models can offer excellent performance in terms of driving and this is probably due to their similar structure. In fact, both models have large kernels in the first layers that decrease in size layer by layer. Probably this allows models to capture large-scale image characteristics (such as track or grass recognition).
+\begin{figure}[h!]
+    \hUno
+    \caption{Test loss and test accuracy of model A}
+    \label{fig:h1}
+\end{figure}
+\begin{figure}[h!]
+    \hDue
+    \caption{Precision, F1 score and recall of model A}
+    \label{fig:h2}
+\end{figure}

@@ -1,0 +1,40 @@
+\section{Image classification problem}
+The classification problem in its general form can be formulated as:\\
+\begin{definition}[Classification problem] Given a target function $f$, learning a function $\hat{f}: X\rightarrow Y$, with $Y = \{0, 1,..., 5\}$ given a training set $D = \{x_i,t_i\}_\{i=1,...,N\}$, such that the approximated function $\hat{f}$ returns values as close as possible to $f$, specially for samples not present in the dataset $D$.
+\end{definition}
+In other words, the ML algorithm should analyze the training data and produce an inferred function, which can be used to label new examples outside the dataset. We want to make the function the more general possible, so that it’s able to predict in the most correct way an unseen instance, while it’s consistent with the dataset.
+\subsection{Dataset analysis}
+In our case the classes are divided into 5 possible actions: 
+\begin{enumerate}
+\item{Do nothing}
+\item{Steer left}
+\item{Steer right}
+\item{Gas}
+\item{Brake}
+\end{enumerate}
+The dataset is already divided into training and test sets, and it is composed by $9118$ images of dimension $96 \times 96 \times 3$ (RGB).
+The dataset is divided into $6369$ images for training set and $2749$ images for test set. In the figure \ref{fig:dataset} is shown the distribution of the images of the training set and test set by classes.
+\begin{figure}
+\begin{minipage}{7cm}
+	\trainDue
+\end{minipage}
+\begin{minipage}{7cm}
+	\testDue
+\end{minipage}
+    	\caption{Distribution of images of the training set.}
+   	\label{fig:dataset}
+\end{figure}
+As we can see both the training set and the test set are unbalanced, but the test set is more than that. This could be a problem when solving the image classification problem. In the figure \ref{fig:photo} is shown a random example of the image in the data set.
+\begin{figure}[h!]
+    \photo
+    \caption{Random image of the dataset.}
+    \label{fig:photo}
+\end{figure}
+
+\subsection{Preprocessing}
+As for all the data that fit any machine learning algorithm, either the images have to be preprocessed. Image preprocessing are the steps taken to format images before they are used by model training. The aim of preprocessing is an improvement of the image data that suppresses unwilling distortions or enhances some image features important for further processing. The image preprocessing step is applied both to the training set and the test set and it consists to transform colored images into black and white images, removing the left down number. In the figure \ref{fig:photoPrep} is shown a random example of the preprocessed image.
+\begin{figure}[h!]
+    \photoPrep
+    \caption{Random image of the preprocessed dataset}
+    \label{fig:photoPrep}
+\end{figure}

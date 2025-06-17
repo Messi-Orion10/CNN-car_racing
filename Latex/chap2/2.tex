@@ -1,0 +1,64 @@
+\subsection{The models}
+The most commonly used image classification algorithm is the Convolutional Neural Network (CNN). A neural network is a function approximator represented by a parametric model. Given a target function $f$, the goal is to learn the parameters of the estimator \textbf{$\hat{f}(x,\Theta)$} in such a way that $\hat{f}$ results to be a good approximation of the target function $f$. Convolutional neural networks are a special class concerning feedforward (FNN) neural networks, where a FNN is an artificial neural network wherein connections between the nodes do not form a cycle: the information moves in only one direction, from the input through the hidden layers to the output. In its general form a neural net consists of a list of layers that transform the input volume into an output volume. The layers are divided into input layer, hidden layers and an output layer. Each layer accepts an input 3D volume and transforms it to an output 3D volume through a differentiable function. Typically, the input of a CNN is an image, the output is a vector defining the class to which the image belongs. The hidden layers are composed by the convolutional layers. Each convolutional layer is in turn composed of 3 stages:
+\begin{itemize}
+\item{\textbf{Convolution stage:} the convolution operation is defined as a translation of a matrix, called kernel, to the input matrix and represents a filter. The resulting matrix is generally smaller than the input matrix;}
+\item{\textbf{Detector stage:} layer will apply an elementwise non-linear activation function, such as \textit{ReLU};}
+\item{\textbf{Pooling stage:} layer will perform a downsampling operation along the spatial dimensions;}
+\end{itemize}
+As stated, in a convolutional neural network, the hidden layers include layers that perform convolutions. This is typically done by a layer that performs a dot product of the convolution kernel with the layer’s input matrix. As the convolution kernel slides along the input matrix for the layer, the convolution operation generates a feature map, which in turn contributes to the input of the next layer. The input is originally an image (tensor) with a shape: \textit{(input height) $\times$ (input width) $\times$ (input channels)}. After passing through a convolutional layer, the image becomes abstracted to a feature map with shape: \textit{(feature map height) $\times$ (feature map width) $\times$ (feature map channels)}. In a neural network, the number of parameters to tune grows rapidly with the increase of the number of layers (just think of a fully connected sequential net, if we have to connect $n$ units of a layer with $m$ units of the following one, we are adding $n \times m$ parameters to the model each time). Furthermore, in convolutional layers a parameter sharing scheme is used to control the number of free parameters. The result of convolution operations is an activation map, and the set of activation maps for each different filter are stacked together along the depth dimension to produce the output volume. To solve the image classification problem we will define two different models that share the same structure. The two models will be two CNN and they will differ from the structure.
+
+\subsubsection{Model A}
+In general, the structure of model A is composed of kernels that increase in layer after layer quantities. In particular they have medium sizes that decrease layer after layer. For the stride is worth a similar speech: it starts with a medium-sized stride that gradually decreases in size. As activation function is used Relu, as optimizer is used Adam and as pooling stage the Maximum Pooling is used. Finally, the network has two dense layers of connection. In the figure \ref{fig:modA} is shown its structure.
+\begin{figure}[h!]
+    \modA
+    \caption{Architecture of the first model}
+    \label{fig:modA}
+\end{figure}
+As shown in the figure \ref{fig:modA} we have $3$ convolutional layers (all of them have \textit{ReLU} as activation function):
+\begin{itemize}
+\item{\textbf{conv2d\_input:} this layer is composed by $32$ kernels of dimension $5 \times 5$ with stride $3 \times 3$ and same padding\footnote{\textbf{padding} represents the size of the outer edge applied to the input image; if 'same', padding is added so that the output has the same size as the original input.};}
+\item{\textbf{conv2d\_1:} this layer is composed by $64$ kernels of dimension $3 \times 3$ with stride $2 \times 2$ and same padding;}
+\item{\textbf{conv2d\_2:} this layer is composed by $128$ kernels of dimension $2 \times 2$ with stride $2 \times 2$ without padding;}
+\end{itemize}
+Then there are $2$ MaxPooling layers of $2 \times 2$ filters of stride $2$ and in the end there are $2$ FC (fully connected layers) followed
+by a \textit{softmax} for output. Finally, we compile the model using Adam as optimizer\footnote{When building a model in a deep learning library like Keras, the optimizer is one of the key components that defines how the model will be trained. The optimizer is responsible for updating the model weights so as to reduce the cost function during training. In simpler terms, the optimizer determines how the model learns from the data during the training process. The choice of the optimizer can affect the convergence rate of the model, the ability of the model to exit from local minima, and its ability to generalize to new data.} with $0.001$ as learning rate.
+In any case, to avoid overfitting, some regularization techniques have been implemented, such as:
+\begin{itemize}
+\item{\textbf{Batch Normalization:} Normalize the output of each layer so that it has a zero average and a unit standard deviation during training;}
+\item{\textbf{Dropout}: During training, it randomly "deactivates" some neurons, forcing the network to develop more robust representations. In our case we have chosen $0.8$ as rate dropout;}
+\item{\textbf{Weight decay:} Called also weight regularization, it is a technique that introduces a penalty to the weights of the model during training, helping to limit excessive growth. In practice, a penalty is added to the cost function during optimization. The term regularization of weights can be implemented in different forms, such as regularization $L1$ or $L2$. Regularization L1 adds the absolute sum of weights, while regularization L2 adds the sum of squares of weights. The addition of this penalty encourages the network to use smaller weights, thus reducing the complexity of the model and improving its generalization ability on unseen data. In our case we have implemented the regularization $L2$ (ridge) with rate equal to $0.001$;}
+\end{itemize}
+This model produces:
+\begin{verbatim}
+Total params: 349,573
+Trainable params: 349,125
+Non-trainable params: 448
+\end{verbatim}
+
+\subsubsection{Model B}
+In general, the structure of model B is composed of kernels that increase in layer after layer quantities. In particular they start from large sizes that decrease layer after layer. For the stride is a similar matter: it starts with a large stride that gradually decreases in size. The Relu is used as an activation function,  SGD is used as an optimizer and Average Pooling is used as a pooling stage. Finally, the network has two dense layers of connection. In the figure \ref{fig:modB} is shown its structure.
+\begin{figure}[h!]
+    \modB
+    \caption{Architecture of the second model}
+    \label{fig:modB}
+\end{figure}
+As shown in the figure \ref{fig:modB} we have $3$ convolutional layers (all of them have \textit{ReLU} as activation function):
+\begin{itemize}
+\item{\textbf{conv2d\_input:} this layer is composed by $32$ kernels of dimension $11 \times 11$ with stride $5 \times 5$ and without padding;}
+\item{\textbf{conv2d\_1:} this layer is composed by $64$ kernels of dimension $5 \times 5$ with stride $1 \times 1$ and without padding;}
+\item{\textbf{conv2d\_2:} this layer is composed by $128$ kernels of dimension $3 \times 3$ with stride $1 \times 1$ and same padding;}
+\end{itemize}
+Then there are $2$ AvgPooling layers of $2 \times 2$ filters of stride $2$ and in the end there are $2$ FC (fully connected layers) followed
+by a \textit{softmax} for output. Finally, we compile the model using SGD as optimizer with $0.001$ as learning rate.
+In any case, to avoid overfitting, we have implemented the same regularization techniques implemented for model A:
+\begin{itemize}
+\item{\textbf{Batch Normalization:} Normalize the output of each layer so that it has a zero average and a unit standard deviation during training;}
+\item{\textbf{Dropout}: rate dropout equal to $0.5$;}
+\item{\textbf{Weight decay:} for model B was implemented the regularization $L2$ with rate equal to $0.001$;}
+\end{itemize}
+This model produces:
+\begin{verbatim}
+Total params: 163,077
+Trainable params: 162,629
+Non-trainable params: 448
+\end{verbatim}
